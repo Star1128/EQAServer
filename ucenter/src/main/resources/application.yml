@@ -9,7 +9,7 @@ spring:
   redis:
     host: localhost # Redis服务器地址
     port: 6379 # Redis服务器连接端口
-    password: Ethan1128? # Redis服务器连接密码
+    password: Ethan1128? # Redis服务器连接密码，注意这是个临时密码，如果 Redis 重启需要进入容器输入 config set requirepass [password] 重新设置
     database: 0 # 使用 0 号库，共 16 个
 server:
   port: 30000

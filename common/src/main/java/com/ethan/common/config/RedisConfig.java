@@ -1,4 +1,4 @@
-package com.ethan.ucenter.config;
+package com.ethan.common.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package com.ethan.ucenter.config;
+package com.ethan.common.config;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;

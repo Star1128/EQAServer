@@ -10,11 +10,11 @@ import org.springframework.context.annotation.ComponentScan;
  */
 
 @SpringBootApplication
+@ComponentScan("com.ethan.ucenter")
 @MapperScan("com.ethan.ucenter.mapper")
 @ComponentScan("com.ethan.common.utils")
-@ComponentScan("com.ethan.ucenter")
+@ComponentScan("com.ethan.common.config")
 public class UCApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(UCApplication.class, args);
     }
