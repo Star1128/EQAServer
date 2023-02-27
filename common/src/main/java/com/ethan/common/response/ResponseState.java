@@ -28,7 +28,8 @@ public enum ResponseState implements IResponseState {
     USERNAME_EXIST(false, 20015, "用户名已被注册"),
     MSG_CODE_OUT_OF_DATE(false, 20016, "验证码过期"),
     LOGIN_INFO_ERROR(false, 20017, "登录信息错误"),
-    PERMISSION_DENIED(false, 20018, "无权限");
+    PERMISSION_DENIED(false, 20018, "无权限"),
+    THIRD_PARTY_ACCESS_FAIL(false, 20019, "第三方应用未接入统一用户中心");
 
     private final boolean success;
     private final int code;

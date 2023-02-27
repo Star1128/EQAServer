@@ -1,4 +1,4 @@
-package com.ethan.ucenter.utils;
+package com.ethan.common.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

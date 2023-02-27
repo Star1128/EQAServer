@@ -1,4 +1,4 @@
-package com.ethan.ucenter.utils;
+package com.ethan.common.utils;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatterBuilder;

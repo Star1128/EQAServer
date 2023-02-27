@@ -21,9 +21,9 @@ import com.ethan.ucenter.service.ICheckService;
 import com.ethan.ucenter.service.ISignInInfoService;
 import com.ethan.ucenter.service.IUserInfoService;
 import com.ethan.ucenter.service.IUserService;
-import com.ethan.ucenter.utils.ELog;
+import com.ethan.common.utils.ELog;
 import com.ethan.ucenter.utils.JwtUtil;
-import com.ethan.ucenter.utils.TextUtil;
+import com.ethan.common.utils.TextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -134,6 +134,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         // 校验密码传输过程是否加密
         if (loginVO.getPassword().length() != 32) {
             return new ResponseResult(ResponseState.LOGIN_INFO_ERROR.setMsg("请使用 MD5 对密码进行加密"));
+        }
+        // 校验 APP 是否已接入 UC
+        if (!mCheckService.checkApp(appKey)) {
+            return new ResponseResult(ResponseState.THIRD_PARTY_ACCESS_FAIL);
         }
 
         // 校验用户

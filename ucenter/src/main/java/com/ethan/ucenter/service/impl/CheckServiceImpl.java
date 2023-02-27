@@ -49,12 +49,13 @@ public class CheckServiceImpl implements ICheckService {
 
     @Override
     public boolean checkToken(String token) {
-        // 当且仅当 UID 和盐都存在时才有效
+        // 1. 当且仅当 UID 和盐都存在时才有效
         String uid = (String) mRedisUtil.get(BaseConfig.REDIS_UID_PREFIX + token);
         String salt = (String) mRedisUtil.get(BaseConfig.REDIS_SALT_PREFIX + token);
         if (uid == null || salt == null) {
             return false;
         }
+        // 2. APP 必须已经接入
         // 解析 Token 拿到 AppKey，判断该 APP 是否接入 UC
         Claims claims = JwtUtil.parseJWT(token, salt);
         String appKey = claims.get(BaseConfig.TOKEN_PAYLOAD_APPKEY, String.class);

@@ -12,7 +12,7 @@ import com.ethan.ucenter.pojo.vo.AppInfoVO;
 import com.ethan.ucenter.service.IAppInfoService;
 import com.ethan.ucenter.service.ICheckService;
 import com.ethan.ucenter.service.IRoleService;
-import com.ethan.ucenter.utils.ELog;
+import com.ethan.common.utils.ELog;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,7 +72,7 @@ public class AppInfoServiceImpl extends ServiceImpl<AppInfoMapper, AppInfo> impl
 
     @Override
     public ResponseResult getUID(String token) {
-        // Token 合法性检查
+        // Token 合法性检查（其实在登录生成 Token 的时候已经检查过一次 APP 合法性了 hhh）
         if (!mCheckService.checkToken(token)) {
             return new ResponseResult(ResponseState.ACCOUNT_NOT_LOGIN);
         }

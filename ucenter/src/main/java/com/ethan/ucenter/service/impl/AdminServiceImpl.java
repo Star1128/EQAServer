@@ -16,7 +16,7 @@ import com.ethan.ucenter.service.IAppInfoService;
 import com.ethan.ucenter.service.ICheckService;
 import com.ethan.ucenter.service.IRoleService;
 import com.ethan.ucenter.service.IUserService;
-import com.ethan.ucenter.utils.ELog;
+import com.ethan.common.utils.ELog;
 import com.ethan.ucenter.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import org.springframework.beans.factory.annotation.Autowired;
