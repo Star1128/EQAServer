@@ -29,7 +29,11 @@ public enum ResponseState implements IResponseState {
     MSG_CODE_OUT_OF_DATE(false, 20016, "验证码过期"),
     LOGIN_INFO_ERROR(false, 20017, "登录信息错误"),
     PERMISSION_DENIED(false, 20018, "无权限"),
-    THIRD_PARTY_ACCESS_FAIL(false, 20019, "第三方应用未接入统一用户中心");
+    THIRD_PARTY_ACCESS_FAIL(false, 20019, "第三方应用未接入统一用户中心"),
+    NETWORK_ERROR(false, 20020, "网络错误"),
+    UC_SERVICE_ERROR(false, 20021, "统一用户中心服务错误"),
+    DB_FAIL(false,20022,"数据库操作异常"),
+    INSUFFICIENT_BALANCE(false, 20023, "余额不足");
 
     private final boolean success;
     private final int code;

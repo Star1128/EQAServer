@@ -37,4 +37,9 @@ public class AppController {
     public ResponseResult getUID(@RequestParam("token") String token){
         return mAppInfoService.getUID(token);
     }
+
+    @GetMapping("/is-admin")
+    public ResponseResult isAdmin(@RequestParam("token") String token){
+        return mAppInfoService.isAdmin(token);
+    }
 }

@@ -18,4 +18,8 @@ public interface IAppInfoService extends IService<AppInfo> {
     ResponseResult register(String token, AppInfoVO appInfoVO);
 
     ResponseResult getUID(String token);
+
+    ResponseResult isAdmin(String token);
+
+    Long appKey2appId(String appKey);
 }

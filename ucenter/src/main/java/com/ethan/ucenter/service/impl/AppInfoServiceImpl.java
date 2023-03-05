@@ -1,18 +1,18 @@
 package com.ethan.ucenter.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ethan.common.response.ResponseResult;
 import com.ethan.common.response.ResponseState;
+import com.ethan.common.utils.ELog;
 import com.ethan.common.utils.RedisUtil;
 import com.ethan.ucenter.config.BaseConfig;
 import com.ethan.ucenter.mapper.AppInfoMapper;
 import com.ethan.ucenter.pojo.po.AppInfo;
-import com.ethan.ucenter.pojo.po.Role;
 import com.ethan.ucenter.pojo.vo.AppInfoVO;
 import com.ethan.ucenter.service.IAppInfoService;
 import com.ethan.ucenter.service.ICheckService;
 import com.ethan.ucenter.service.IRoleService;
-import com.ethan.common.utils.ELog;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -61,11 +61,7 @@ public class AppInfoServiceImpl extends ServiceImpl<AppInfoMapper, AppInfo> impl
         getBaseMapper().insert(appInfo);
 
         // 申请者自动成为所注册应用的超级管理员
-        Role role = new Role();
-        role.setAppId(appInfo.getAppId());
-        role.setRole(BaseConfig.DB_ROLE_ROLE_SUPER_ADMIN);
-        role.setUserId(Long.parseLong(uid));
-        mRoleService.getBaseMapper().insert(role);
+        mRoleService.addRole(appInfo.getAppId(), BaseConfig.DB_ROLE_ROLE_SUPER_ADMIN, Long.parseLong(uid));
 
         return new ResponseResult(ResponseState.SUCCESS, appKey);
     }
@@ -80,5 +76,32 @@ public class AppInfoServiceImpl extends ServiceImpl<AppInfoMapper, AppInfo> impl
         // 从 Redis 拿 UID
         String uid = (String) mRedisUtil.get(BaseConfig.REDIS_UID_PREFIX + token);
         return new ResponseResult(ResponseState.THIRD_PARTY_ACCESS_SUCCESS, uid);
+    }
+
+    @Override
+    public ResponseResult isAdmin(String token) {
+        // Token 合法性检查
+        if (!mCheckService.checkToken(token)) {
+            return new ResponseResult(ResponseState.ACCOUNT_NOT_LOGIN);
+        }
+
+        // 从 Redis 拿 UID
+        Long uid = Long.parseLong((String) mRedisUtil.get(BaseConfig.REDIS_UID_PREFIX + token));
+        String salt = (String) mRedisUtil.get(BaseConfig.REDIS_SALT_PREFIX + token);
+        String appKey = mCheckService.getAppKey(token, salt);
+        Long appId = appKey2appId(appKey);
+
+        if (mRoleService.checkRole(appId, uid)) {
+            return ResponseResult.SUCCESS("该用户为应用（appId = " + appId + "）的管理员");
+        }
+        return ResponseResult.FAIL("该用户不是应用（appId = " + appId + "）的管理员");
+    }
+
+    @Override
+    public Long appKey2appId(String appKey) {
+        QueryWrapper<AppInfo> wrapper = new QueryWrapper<>();
+        wrapper.eq("app_key", appKey);
+        AppInfo appInfo = getOne(wrapper);
+        return appInfo.getAppId();
     }
 }

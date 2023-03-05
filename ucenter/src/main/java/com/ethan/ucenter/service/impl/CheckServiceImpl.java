@@ -71,4 +71,10 @@ public class CheckServiceImpl implements ICheckService {
         }
         return true;
     }
+
+    @Override
+    public String getAppKey(String token, String salt) {
+        Claims claims = JwtUtil.parseJWT(token, salt);
+        return claims.get(BaseConfig.TOKEN_PAYLOAD_APPKEY, String.class);
+    }
 }
