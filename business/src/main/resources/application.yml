@@ -6,11 +6,6 @@ spring:
     url: jdbc:mysql://localhost:3306/eqa?characterEncoding=utf-8&useSSL=false&useUnicode=true&serverTimezone=GMT%2B8
     username: root
     password: Ethan1128?
-  redis:
-    host: localhost # Redis服务器地址
-    port: 6379 # Redis服务器连接端口
-    password: Ethan1128? # Redis服务器连接密码
-    database: 1 # 使用 1 号库，共 16 个
 server:
   port: 30001
 mybatis-plus:
