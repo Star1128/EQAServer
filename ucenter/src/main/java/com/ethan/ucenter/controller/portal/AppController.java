@@ -5,6 +5,7 @@ import com.ethan.ucenter.pojo.vo.AppInfoVO;
 import com.ethan.ucenter.service.IAppInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +29,7 @@ public class AppController {
     /**
      * 目前的注册 APP 流程是提交信息后生成 appKey 返回，暂时闲置 appSecret 字段
      */
-    @GetMapping("/register")
+    @PostMapping("/register")
     public ResponseResult register(@RequestParam("token") String token, @RequestBody AppInfoVO appInfoVO) {
         return mAppInfoService.register(token, appInfoVO);
     }

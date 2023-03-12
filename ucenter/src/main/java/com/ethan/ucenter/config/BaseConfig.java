@@ -21,7 +21,7 @@ public class BaseConfig {
 
     /* Email */
     // 发送邮件开关
-    public static final boolean EMAIL_SWITCH = false; // TODO: 2023/2/15 开发阶段关闭
+    public static final boolean EMAIL_SWITCH = true; // TODO: 2023/2/15 开发阶段关闭
     // 是否允许注册邮箱重复
     public static final boolean EMAIL_LIMIT_SWITCH = true; // TODO: 2023/2/15 开发阶段开启
     // 验证码类型
@@ -30,7 +30,7 @@ public class BaseConfig {
     // 验证码位数
     public static final int EMAIL_VERIFY_CODE_MAX = 999999;
     // 邮件标题
-    public static final String EMAIL_TITLE = "[问途]验证码邮件";
+    public static final String EMAIL_TITLE = "【问途】验证码邮件";
     // 邮件发件人
     public static final String EMAIL_FROM = "问途";
     // 邮件内容

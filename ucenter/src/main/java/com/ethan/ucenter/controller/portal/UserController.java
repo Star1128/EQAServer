@@ -37,7 +37,7 @@ public class UserController {
         return mUserService.signIn(emailCode, signInVO, request);
     }
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseResult logIn(@RequestParam("appKey") String appKey, @RequestBody LoginVO loginVO, HttpServletRequest request) {
         return mUserService.logIn(appKey, loginVO, request);
     }
@@ -57,7 +57,7 @@ public class UserController {
         return mUserService.editPassword(token, emailCode, signInVO, request);
     }
 
-    @GetMapping("/exit")
+    @PostMapping("/exit")
     public ResponseResult exit(@RequestParam("token") String token, HttpServletRequest request) {
         return mUserService.exit(token, request);
     }
