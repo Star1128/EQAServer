@@ -33,12 +33,12 @@ public class UserController {
     private IUserService mUserService;
 
     @PostMapping("/signin")
-    public ResponseResult signIn(@RequestParam("emailCode") String emailCode, @RequestBody SignInVO signInVO, HttpServletRequest request) {
+    public ResponseResult signIn(@RequestParam("email_code") String emailCode, @RequestBody SignInVO signInVO, HttpServletRequest request) {
         return mUserService.signIn(emailCode, signInVO, request);
     }
 
     @PostMapping("/login")
-    public ResponseResult logIn(@RequestParam("appKey") String appKey, @RequestBody LoginVO loginVO, HttpServletRequest request) {
+    public ResponseResult logIn(@RequestParam("app_key") String appKey, @RequestBody LoginVO loginVO, HttpServletRequest request) {
         return mUserService.logIn(appKey, loginVO, request);
     }
 
@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @PostMapping("/find-back-password")
-    public ResponseResult editPassword(@RequestParam("token") String token, @RequestParam("emailCode") String emailCode, @RequestBody SignInVO signInVO, HttpServletRequest request) {
+    public ResponseResult editPassword(@RequestParam("token") String token, @RequestParam("email_code") String emailCode, @RequestBody SignInVO signInVO, HttpServletRequest request) {
         return mUserService.editPassword(token, emailCode, signInVO, request);
     }
 

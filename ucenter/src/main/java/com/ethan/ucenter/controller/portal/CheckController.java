@@ -43,7 +43,7 @@ public class CheckController {
      * 检查用户名是否已被注册
      */
     @GetMapping("/username")
-    public ResponseResult checkUserName(@RequestParam("userName") String userName) {
+    public ResponseResult checkUserName(@RequestParam("user_name") String userName) {
         if (mCheckService.checkUserName(userName)) {
             return new ResponseResult(ResponseState.USERNAME_EXIST);
         } else {
@@ -69,7 +69,7 @@ public class CheckController {
      * 检查 APP 是否在用户中心注册过
      */
     @GetMapping("/app")
-    public ResponseResult checkApp(@RequestParam("appkey") String appKey) {
+    public ResponseResult checkApp(@RequestParam("app_key") String appKey) {
         if (mCheckService.checkApp(appKey)) {
             return new ResponseResult(ResponseState.SUCCESS.setMsg("该应用已在EUC注册"));
         } else {
