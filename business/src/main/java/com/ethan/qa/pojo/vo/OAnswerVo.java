@@ -13,7 +13,9 @@ public class OAnswerVo {
     private Long answerId;
     private Long questionId;
     private Long userId;
+    private String userName;
     private Long lastEditUserId;
+    private String lastEditUserName;
     private String content;
     private String images;
     private Integer reward;

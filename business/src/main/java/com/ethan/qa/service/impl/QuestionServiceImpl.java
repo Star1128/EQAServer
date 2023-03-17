@@ -199,6 +199,10 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
         oQuestionVo.setStarCount(mUserStarService.getQuestionStarCount(q.getQuestionId()));
         oQuestionVo.setAnswerCount(mAnswerService.getAnswersCount(q.getQuestionId()));
         // TODO: 2023/2/28 联立查询评论数
+        ResponseResult userNameResult = getUserName(q.getUserId());
+        oQuestionVo.setUserName(userNameResult.getData().toString());
+        ResponseResult lastEditUserNameResult = getUserName(q.getLastEditUserId());
+        oQuestionVo.setLastEditUserName(lastEditUserNameResult.getData().toString());
         return oQuestionVo;
     }
 }

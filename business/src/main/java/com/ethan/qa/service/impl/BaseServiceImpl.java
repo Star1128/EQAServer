@@ -84,9 +84,18 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
     }
 
     /**
+     * 远程获取用户名
+     *
+     * @return 发送失败、无响应、账号未登录：返回指定错误码；<br>获取成功：返回信息
+     */
+    protected ResponseResult getUserName(Long uid) {
+        return UCProxy(String.valueOf(uid), GlobalConfig.UC_GET_NAME);
+    }
+
+    /**
      * 代理转换，解决同类或子类中调用 @Async 方法失效的问题
      */
-    private ResponseResult UCProxy(String token, int type) {
+    private ResponseResult UCProxy(String param, int type) {
         // 使用代理类
         QuestionServiceImpl service = applicationContext.getBean(QuestionServiceImpl.class);
         try {
@@ -94,13 +103,16 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
             String url = "";
             switch (type) {
                 case GlobalConfig.UC_T2U:
-                    url = GlobalConfig.UC_TOKEN2UID_URL + GlobalConfig.URL_SEPARATOR + "token=" + token;
+                    url = GlobalConfig.UC_TOKEN2UID_URL + GlobalConfig.URL_SEPARATOR + "token=" + param;
                     break;
                 case GlobalConfig.UC_INFO:
-                    url = GlobalConfig.UC_INFO_URL + GlobalConfig.URL_SEPARATOR + "token=" + token;
+                    url = GlobalConfig.UC_INFO_URL + GlobalConfig.URL_SEPARATOR + "token=" + param;
                     break;
                 case GlobalConfig.UC_IS_ADMIN:
-                    url = GlobalConfig.UC_IS_ADMIN_URL + GlobalConfig.URL_SEPARATOR + "token=" + token;
+                    url = GlobalConfig.UC_IS_ADMIN_URL + GlobalConfig.URL_SEPARATOR + "token=" + param;
+                    break;
+                case GlobalConfig.UC_GET_NAME:
+                    url = GlobalConfig.UC_GET_NAME_URL + param;
                     break;
             }
             return service.UCCore(url).get();

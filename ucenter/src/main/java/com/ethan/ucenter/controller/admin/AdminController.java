@@ -42,11 +42,11 @@ public class AdminController {
 
     @GetMapping("/user/disable/{userId}")
     public ResponseResult disableUser(@RequestParam("token") String token, @PathVariable("userId") long userId, @RequestParam("status") int status, HttpServletRequest request) {
-        return mAdminService.disableUser(token,userId,status,request);
+        return mAdminService.disableUser(token, userId, status, request);
     }
 
     @GetMapping("/user/delete/{userId}")
     public ResponseResult deleteUser(@RequestParam("token") String token, @PathVariable("userId") long userId, HttpServletRequest request) {
-        return mAdminService.deleteUser(token,userId,request);
+        return mAdminService.deleteUser(token, userId, request);
     }
 }

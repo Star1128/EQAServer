@@ -12,7 +12,9 @@ import java.time.LocalDateTime;
 public class OQuestionVo {
     private Long questionId;
     private Long userId;
+    private String userName;
     private Long lastEditUserId;
+    private String lastEditUserName;
     private Long domainId;
     private String title;
     private String content;

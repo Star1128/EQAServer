@@ -228,6 +228,10 @@ public class AnswerServiceImpl extends BaseServiceImpl<AnswerMapper, Answer> imp
         // 联立查询收藏数
         oAnswerVo.setStarCount(mUserStarService.getAnswerStarCount(a.getAnswerId()));
         // TODO: 2023/2/28 联立查询评论数
+        ResponseResult userNameResult = getUserName(a.getUserId());
+        oAnswerVo.setUserName(userNameResult.getData().toString());
+        ResponseResult lastEditUserNameResult = getUserName(a.getLastEditUserIdCopy1());
+        oAnswerVo.setLastEditUserName(lastEditUserNameResult.getData().toString());
         return oAnswerVo;
     }
 }

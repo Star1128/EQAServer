@@ -12,6 +12,7 @@ public class GlobalConfig {
     public static final int UC_T2U = 0;
     public static final int UC_INFO = 1;
     public static final int UC_IS_ADMIN = 2;
+    public static final int UC_GET_NAME = 3;
 
     static {
         if (GlobalSwitch.DEBUG_MODE) {
@@ -24,6 +25,7 @@ public class GlobalConfig {
     public static final String UC_TOKEN2UID_URL = UC_BASE_URL + "app/uid";
     public static final String UC_INFO_URL = UC_BASE_URL + "user/info";
     public static final String UC_IS_ADMIN_URL = UC_BASE_URL + "app/is-admin";
+    public static final String UC_GET_NAME_URL = UC_BASE_URL + "user/name/";
     public static final String URL_SEPARATOR = "?";
 
     /* 数据库相关 */

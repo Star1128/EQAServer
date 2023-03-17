@@ -34,4 +34,9 @@ public interface IUserService extends IService<User> {
     ResponseResult exit(String token, HttpServletRequest request);
 
     PageVO<UserAdminVO> listUser(int page, String phone, String email, String username, String id, String status);
+
+    /**
+     * 获取用户名
+     */
+    ResponseResult getName(Long userId);
 }

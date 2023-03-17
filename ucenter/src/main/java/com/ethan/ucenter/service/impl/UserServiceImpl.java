@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.ethan.common.response.ResponseResult;
 import com.ethan.common.response.ResponseState;
+import com.ethan.common.utils.ELog;
 import com.ethan.common.utils.RedisUtil;
+import com.ethan.common.utils.TextUtil;
 import com.ethan.ucenter.config.BaseConfig;
 import com.ethan.ucenter.mapper.UserMapper;
 import com.ethan.ucenter.pojo.po.SignInInfo;
@@ -21,9 +23,7 @@ import com.ethan.ucenter.service.ICheckService;
 import com.ethan.ucenter.service.ISignInInfoService;
 import com.ethan.ucenter.service.IUserInfoService;
 import com.ethan.ucenter.service.IUserService;
-import com.ethan.common.utils.ELog;
 import com.ethan.ucenter.utils.JwtUtil;
-import com.ethan.common.utils.TextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -296,5 +296,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         pageVO.setHasNextPage(page != totalPage);
 
         return pageVO;
+    }
+
+    @Override
+    public ResponseResult getName(Long userId) {
+        User user = getById(userId);
+        return ResponseResult.SUCCESS((Object) user.getUserName());
     }
 }
