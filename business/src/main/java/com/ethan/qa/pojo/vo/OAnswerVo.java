@@ -10,11 +10,11 @@ import java.time.LocalDateTime;
  */
 @Data
 public class OAnswerVo {
-    private Long answerId;
-    private Long questionId;
-    private Long userId;
+    private String answerId;
+    private String questionId;
+    private String userId;
     private String userName;
-    private Long lastEditUserId;
+    private String lastEditUserId;
     private String lastEditUserName;
     private String content;
     private String images;
@@ -27,10 +27,10 @@ public class OAnswerVo {
     private LocalDateTime updateTime;
 
     public OAnswerVo(Answer answer) {
-        setAnswerId(answer.getAnswerId());
-        setQuestionId(answer.getQuestionId());
-        setUserId(answer.getUserId());
-        setLastEditUserId(answer.getLastEditUserIdCopy1());
+        setAnswerId(String.valueOf(answer.getAnswerId()));
+        setQuestionId(String.valueOf(answer.getQuestionId()));
+        setUserId(String.valueOf(answer.getUserId()));
+        setLastEditUserId(String.valueOf(answer.getLastEditUserIdCopy1()));
         setContent(answer.getContent());
         setImages(answer.getImages());
         setReward(answer.getReward());

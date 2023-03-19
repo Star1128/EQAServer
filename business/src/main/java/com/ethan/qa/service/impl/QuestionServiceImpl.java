@@ -90,7 +90,7 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
         OQuestionVo question = getExtraInfo(origin);
 
         // 获取回答信息
-        List<OAnswerVo> answers = mAnswerService.getAnswers(question.getQuestionId());
+        List<OAnswerVo> answers = mAnswerService.getAnswers(Long.parseLong(question.getQuestionId()));
 
         // 拼装返回
         OQAVo oqaVo = new OQAVo(question, answers);

@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
  */
 @Data
 public class OQuestionVo {
-    private Long questionId;
-    private Long userId;
+    private String questionId;
+    private String userId;
     private String userName;
-    private Long lastEditUserId;
+    private String lastEditUserId;
     private String lastEditUserName;
-    private Long domainId;
+    private String domainId;
     private String title;
     private String content;
     private String images;
@@ -28,10 +28,10 @@ public class OQuestionVo {
     private LocalDateTime updateTime;
 
     public OQuestionVo(Question question) {
-        setQuestionId(question.getQuestionId());
-        userId = question.getUserId();
-        setLastEditUserId(question.getLastEditUserId());
-        domainId = question.getDomainId();
+        setQuestionId(String.valueOf(question.getQuestionId()));
+        userId = String.valueOf(question.getUserId());
+        setLastEditUserId(String.valueOf(question.getLastEditUserId()));
+        domainId = String.valueOf(question.getDomainId());
         title = question.getTitle();
         setContent(question.getContent());
         setImages(question.getImages());
