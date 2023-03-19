@@ -11,6 +11,7 @@ import com.ethan.qa.mapper.QuestionMapper;
 import com.ethan.qa.pojo.po.Question;
 import com.ethan.qa.pojo.vo.IQuestionVo;
 import com.ethan.qa.pojo.vo.OAnswerVo;
+import com.ethan.qa.pojo.vo.OQAVo;
 import com.ethan.qa.pojo.vo.OQuestionVo;
 import com.ethan.qa.service.IAnswerService;
 import com.ethan.qa.service.IDomainService;
@@ -92,10 +93,8 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
         List<OAnswerVo> answers = mAnswerService.getAnswers(question.getQuestionId());
 
         // 拼装返回
-        List<Object> qa = new ArrayList<>();
-        qa.add(question);
-        qa.add(answers);
-        return new ResponseResult(ResponseState.SUCCESS, qa);
+        OQAVo oqaVo = new OQAVo(question, answers);
+        return new ResponseResult(ResponseState.SUCCESS, oqaVo);
     }
 
     @Override
