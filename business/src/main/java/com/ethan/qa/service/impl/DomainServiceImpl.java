@@ -6,8 +6,11 @@ import com.ethan.common.response.ResponseState;
 import com.ethan.common.utils.ELog;
 import com.ethan.qa.mapper.DomainMapper;
 import com.ethan.qa.pojo.po.Domain;
+import com.ethan.qa.pojo.vo.ODomainVo;
 import com.ethan.qa.service.IDomainService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -78,6 +81,6 @@ public class DomainServiceImpl extends BaseServiceImpl<DomainMapper, Domain> imp
         long uid = Long.parseLong((String) result.getData()); // 约定大于配置，UID 一定是 Long 型：）
         ELog.INFO("获取领域列表 UID ---> " + uid);
 
-        return ResponseResult.SUCCESS(list());
+        return ResponseResult.SUCCESS(new ODomainVo(list()));
     }
 }
