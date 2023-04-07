@@ -78,11 +78,6 @@ public class DomainServiceImpl extends BaseServiceImpl<DomainMapper, Domain> imp
         long uid = Long.parseLong((String) result.getData()); // 约定大于配置，UID 一定是 Long 型：）
         ELog.INFO("获取领域列表 UID ---> " + uid);
 
-        // 检查管理员权限
-        if (!isAdmin().isSuccess()) {
-            return new ResponseResult(ResponseState.PERMISSION_DENIED);
-        }
-
         return ResponseResult.SUCCESS(list());
     }
 }
