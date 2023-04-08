@@ -81,4 +81,10 @@ public class DomainServiceImpl extends BaseServiceImpl<DomainMapper, Domain> imp
 
         return ResponseResult.SUCCESS(new DomainO(list()));
     }
+
+    @Override
+    public String getDomainName(Long domainId) {
+        Domain domain = getById(domainId);
+        return domain.getDomainName();
+    }
 }

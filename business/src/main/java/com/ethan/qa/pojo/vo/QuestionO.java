@@ -16,6 +16,7 @@ public class QuestionO {
     private String lastEditUserId;
     private String lastEditUserName;
     private String domainId;
+    private String domainName;
     private String title;
     private String content;
     private String images;

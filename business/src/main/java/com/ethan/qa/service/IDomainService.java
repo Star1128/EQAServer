@@ -33,4 +33,6 @@ public interface IDomainService extends IService<Domain> {
      * 领域列表
      */
     ResponseResult listDomain();
+
+    String getDomainName(Long domainId);
 }

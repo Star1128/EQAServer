@@ -197,12 +197,18 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
         QuestionO questionO = new QuestionO(q);
         // 联立查询收藏数
         questionO.setStarCount(mUserStarService.getQuestionStarCount(q.getQuestionId()));
+        // 联立查询回答数
         questionO.setAnswerCount(mAnswerService.getAnswersCount(q.getQuestionId()));
         // TODO: 2023/2/28 联立查询评论数
+        // UID -> 名称
         ResponseResult userNameResult = getUserName(q.getUserId());
         questionO.setUserName(userNameResult.getData().toString());
         ResponseResult lastEditUserNameResult = getUserName(q.getLastEditUserId());
         questionO.setLastEditUserName(lastEditUserNameResult.getData().toString());
+        // DomainID -> 名称
+        String domainName = mDomainService.getDomainName(q.getDomainId());
+        questionO.setDomainName(domainName);
+
         return questionO;
     }
 }
