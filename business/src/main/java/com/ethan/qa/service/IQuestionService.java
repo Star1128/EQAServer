@@ -3,7 +3,7 @@ package com.ethan.qa.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ethan.common.response.ResponseResult;
 import com.ethan.qa.pojo.po.Question;
-import com.ethan.qa.pojo.vo.IQuestionVo;
+import com.ethan.qa.pojo.vo.QuestionI;
 
 /**
  * <p>
@@ -32,7 +32,7 @@ public interface IQuestionService extends IService<Question> {
     /**
      * 发布问题
      */
-    ResponseResult publishQuestion(Long questionId,IQuestionVo IQuestionVo);
+    ResponseResult publishQuestion(Long questionId, QuestionI QuestionI);
 
     /**
      * 获取用户提问数量

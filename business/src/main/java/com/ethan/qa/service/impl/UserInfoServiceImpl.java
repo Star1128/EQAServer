@@ -4,7 +4,7 @@ import com.ethan.common.response.ResponseResult;
 import com.ethan.common.utils.ELog;
 import com.ethan.qa.mapper.UserInfoMapper;
 import com.ethan.qa.pojo.po.UserInfo;
-import com.ethan.qa.pojo.vo.OUserInfoVo;
+import com.ethan.qa.pojo.vo.UserInfoO;
 import com.ethan.qa.service.IAnswerService;
 import com.ethan.qa.service.IQuestionService;
 import com.ethan.qa.service.IUserDomainService;
@@ -82,7 +82,7 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
         int balance = getBalance(uid);
 
         // 组合
-        OUserInfoVo oUserInfoVo = new OUserInfoVo(domainAmount, questionAmount, answerAmount, userInfo, balance);
-        return ResponseResult.SUCCESS(oUserInfoVo);
+        UserInfoO userInfoO = new UserInfoO(domainAmount, questionAmount, answerAmount, userInfo, balance);
+        return ResponseResult.SUCCESS(userInfoO);
     }
 }

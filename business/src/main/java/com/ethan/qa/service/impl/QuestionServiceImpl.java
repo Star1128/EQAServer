@@ -9,10 +9,11 @@ import com.ethan.common.utils.TextUtil;
 import com.ethan.qa.config.GlobalConfig;
 import com.ethan.qa.mapper.QuestionMapper;
 import com.ethan.qa.pojo.po.Question;
-import com.ethan.qa.pojo.vo.IQuestionVo;
-import com.ethan.qa.pojo.vo.OAnswerVo;
-import com.ethan.qa.pojo.vo.OQAVo;
-import com.ethan.qa.pojo.vo.OQuestionVo;
+import com.ethan.qa.pojo.vo.QuestionI;
+import com.ethan.qa.pojo.vo.AnswerO;
+import com.ethan.qa.pojo.vo.QAO;
+import com.ethan.qa.pojo.vo.QuestionO;
+import com.ethan.qa.pojo.vo.QuestionsO;
 import com.ethan.qa.service.IAnswerService;
 import com.ethan.qa.service.IDomainService;
 import com.ethan.qa.service.IQuestionService;
@@ -71,12 +72,12 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
         }
 
         // 组装额外信息
-        List<OQuestionVo> questionList = new ArrayList<>();
+        List<QuestionO> questionList = new ArrayList<>();
         for (Question q : originList) {
             questionList.add(getExtraInfo(q));
         }
 
-        return ResponseResult.SUCCESS(questionList);
+        return ResponseResult.SUCCESS(new QuestionsO(questionList));
     }
 
     @Override
@@ -87,18 +88,18 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
             return ResponseResult.FAIL("问题不存在");
         }
         // 组装额外信息
-        OQuestionVo question = getExtraInfo(origin);
+        QuestionO question = getExtraInfo(origin);
 
         // 获取回答信息
-        List<OAnswerVo> answers = mAnswerService.getAnswers(Long.parseLong(question.getQuestionId()));
+        List<AnswerO> answers = mAnswerService.getAnswers(Long.parseLong(question.getQuestionId()));
 
         // 拼装返回
-        OQAVo oqaVo = new OQAVo(question, answers);
-        return new ResponseResult(ResponseState.SUCCESS, oqaVo);
+        QAO QAO = new QAO(question, answers);
+        return new ResponseResult(ResponseState.SUCCESS, QAO);
     }
 
     @Override
-    public ResponseResult publishQuestion(Long questionId, IQuestionVo questionVo) {
+    public ResponseResult publishQuestion(Long questionId, QuestionI questionVo) {
         ResponseResult result;
         if (!(result = T2U()).isSuccess()) {
             return result;
@@ -181,7 +182,7 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
 
         QueryWrapper<Question> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", uid);
-        List<OQuestionVo> questionList = new ArrayList<>();
+        List<QuestionO> questionList = new ArrayList<>();
         for (Question q : list(wrapper)) {
             questionList.add(getExtraInfo(q));
         }
@@ -192,16 +193,16 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
     /**
      * 组装问题额外信息，联立查询收藏数、回答数、点赞数
      */
-    private OQuestionVo getExtraInfo(Question q) {
-        OQuestionVo oQuestionVo = new OQuestionVo(q);
+    private QuestionO getExtraInfo(Question q) {
+        QuestionO questionO = new QuestionO(q);
         // 联立查询收藏数
-        oQuestionVo.setStarCount(mUserStarService.getQuestionStarCount(q.getQuestionId()));
-        oQuestionVo.setAnswerCount(mAnswerService.getAnswersCount(q.getQuestionId()));
+        questionO.setStarCount(mUserStarService.getQuestionStarCount(q.getQuestionId()));
+        questionO.setAnswerCount(mAnswerService.getAnswersCount(q.getQuestionId()));
         // TODO: 2023/2/28 联立查询评论数
         ResponseResult userNameResult = getUserName(q.getUserId());
-        oQuestionVo.setUserName(userNameResult.getData().toString());
+        questionO.setUserName(userNameResult.getData().toString());
         ResponseResult lastEditUserNameResult = getUserName(q.getLastEditUserId());
-        oQuestionVo.setLastEditUserName(lastEditUserNameResult.getData().toString());
-        return oQuestionVo;
+        questionO.setLastEditUserName(lastEditUserNameResult.getData().toString());
+        return questionO;
     }
 }

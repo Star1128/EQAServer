@@ -7,11 +7,11 @@ import java.util.List;
 /**
  * @author Ethan 2023/4/7
  */
-public class ODomainVo {
+public class DomainO {
 
     private List<Domain> mDomains;
 
-    public ODomainVo(List<Domain> domains) {
+    public DomainO(List<Domain> domains) {
         mDomains = domains;
     }
 

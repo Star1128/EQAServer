@@ -1,7 +1,7 @@
 package com.ethan.qa.controller;
 
 import com.ethan.common.response.ResponseResult;
-import com.ethan.qa.pojo.vo.IQuestionVo;
+import com.ethan.qa.pojo.vo.QuestionI;
 import com.ethan.qa.service.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,8 +44,8 @@ public class QuestionController {
     }
 
     @PostMapping("/publish")
-    public ResponseResult publishQuestion(@RequestParam(value = "question_id", required = false) Long questionId, @RequestBody IQuestionVo IQuestionVo) {
-        return mQuestionService.publishQuestion(questionId, IQuestionVo);
+    public ResponseResult publishQuestion(@RequestParam(value = "question_id", required = false) Long questionId, @RequestBody QuestionI QuestionI) {
+        return mQuestionService.publishQuestion(questionId, QuestionI);
     }
 
     @DeleteMapping("/delete")

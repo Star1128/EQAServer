@@ -3,8 +3,8 @@ package com.ethan.qa.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ethan.common.response.ResponseResult;
 import com.ethan.qa.pojo.po.Answer;
-import com.ethan.qa.pojo.vo.IAnswerVo;
-import com.ethan.qa.pojo.vo.OAnswerVo;
+import com.ethan.qa.pojo.vo.AnswerI;
+import com.ethan.qa.pojo.vo.AnswerO;
 
 import java.util.List;
 
@@ -26,17 +26,17 @@ public interface IAnswerService extends IService<Answer> {
     /**
      * 获取问题下的回答列表，并进行算法排序
      */
-    List<OAnswerVo> getAnswers(long questionId);
+    List<AnswerO> getAnswers(long questionId);
 
     /**
      * 发布回答
      */
-    ResponseResult publishAnswer(long questionId, IAnswerVo IAnswerVo);
+    ResponseResult publishAnswer(long questionId, AnswerI AnswerI);
 
     /**
      * 修改回答
      */
-    ResponseResult editAnswer(Long answerId, IAnswerVo answerVo);
+    ResponseResult editAnswer(Long answerId, AnswerI answerVo);
 
     /**
      * 回答点赞

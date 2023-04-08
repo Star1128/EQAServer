@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * @author Ethan 2023/2/28
  */
 @Data
-public class OQuestionVo {
+public class QuestionO {
     private String questionId;
     private String userId;
     private String userName;
@@ -27,7 +27,7 @@ public class OQuestionVo {
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 
-    public OQuestionVo(Question question) {
+    public QuestionO(Question question) {
         setQuestionId(String.valueOf(question.getQuestionId()));
         userId = String.valueOf(question.getUserId());
         setLastEditUserId(String.valueOf(question.getLastEditUserId()));

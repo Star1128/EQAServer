@@ -6,8 +6,8 @@ import com.ethan.common.response.ResponseState;
 import com.ethan.common.utils.ELog;
 import com.ethan.qa.mapper.AnswerMapper;
 import com.ethan.qa.pojo.po.Answer;
-import com.ethan.qa.pojo.vo.IAnswerVo;
-import com.ethan.qa.pojo.vo.OAnswerVo;
+import com.ethan.qa.pojo.vo.AnswerI;
+import com.ethan.qa.pojo.vo.AnswerO;
 import com.ethan.qa.service.IAnswerService;
 import com.ethan.qa.service.IUserInfoService;
 import com.ethan.qa.service.IUserStarService;
@@ -43,7 +43,7 @@ public class AnswerServiceImpl extends BaseServiceImpl<AnswerMapper, Answer> imp
     }
 
     @Override
-    public List<OAnswerVo> getAnswers(long questionId) {
+    public List<AnswerO> getAnswers(long questionId) {
 
         // 数据库查原始信息
         QueryWrapper<Answer> wrapper = new QueryWrapper<>();
@@ -52,7 +52,7 @@ public class AnswerServiceImpl extends BaseServiceImpl<AnswerMapper, Answer> imp
         ELog.INFO(originList.toString());
 
         // 组装额外信息
-        List<OAnswerVo> answerList = new ArrayList<>();
+        List<AnswerO> answerList = new ArrayList<>();
         for (Answer a : originList) {
             answerList.add(getExtraInfo(a));
         }
@@ -63,7 +63,7 @@ public class AnswerServiceImpl extends BaseServiceImpl<AnswerMapper, Answer> imp
     }
 
     @Override
-    public ResponseResult publishAnswer(long questionId, IAnswerVo answerVo) {
+    public ResponseResult publishAnswer(long questionId, AnswerI answerVo) {
         ResponseResult result;
         if (!(result = T2U()).isSuccess()) {
             return result;
@@ -81,7 +81,7 @@ public class AnswerServiceImpl extends BaseServiceImpl<AnswerMapper, Answer> imp
     }
 
     @Override
-    public ResponseResult editAnswer(Long answerId, IAnswerVo answerVo) {
+    public ResponseResult editAnswer(Long answerId, AnswerI answerVo) {
         ResponseResult result;
         if (!(result = T2U()).isSuccess()) {
             return result;
@@ -190,7 +190,7 @@ public class AnswerServiceImpl extends BaseServiceImpl<AnswerMapper, Answer> imp
 
         QueryWrapper<Answer> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", uid);
-        List<OAnswerVo> answerList = new ArrayList<>();
+        List<AnswerO> answerList = new ArrayList<>();
         for (Answer a : list(wrapper)) {
             answerList.add(getExtraInfo(a));
         }
@@ -223,15 +223,15 @@ public class AnswerServiceImpl extends BaseServiceImpl<AnswerMapper, Answer> imp
     /**
      * 组装回答额外信息
      */
-    private OAnswerVo getExtraInfo(Answer a) {
-        OAnswerVo oAnswerVo = new OAnswerVo(a);
+    private AnswerO getExtraInfo(Answer a) {
+        AnswerO answerO = new AnswerO(a);
         // 联立查询收藏数
-        oAnswerVo.setStarCount(mUserStarService.getAnswerStarCount(a.getAnswerId()));
+        answerO.setStarCount(mUserStarService.getAnswerStarCount(a.getAnswerId()));
         // TODO: 2023/2/28 联立查询评论数
         ResponseResult userNameResult = getUserName(a.getUserId());
-        oAnswerVo.setUserName(userNameResult.getData().toString());
+        answerO.setUserName(userNameResult.getData().toString());
         ResponseResult lastEditUserNameResult = getUserName(a.getLastEditUserIdCopy1());
-        oAnswerVo.setLastEditUserName(lastEditUserNameResult.getData().toString());
-        return oAnswerVo;
+        answerO.setLastEditUserName(lastEditUserNameResult.getData().toString());
+        return answerO;
     }
 }

@@ -7,7 +7,7 @@ import lombok.Data;
  * @author Ethan 2023/2/28
  */
 @Data
-public class IQuestionVo {
+public class QuestionI {
     private String title;
     private String content;
     private Long domainId;

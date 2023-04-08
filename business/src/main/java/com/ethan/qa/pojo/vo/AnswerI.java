@@ -7,7 +7,7 @@ import lombok.Data;
  * @author Ethan 2023/2/28
  */
 @Data
-public class IAnswerVo {
+public class AnswerI {
     private String content;
 
     public Answer toAnswer(long qid, long uid, long lastId) {

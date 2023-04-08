@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * @author Ethan 2023/2/28
  */
 @Data
-public class OAnswerVo {
+public class AnswerO {
     private String answerId;
     private String questionId;
     private String userId;
@@ -26,7 +26,7 @@ public class OAnswerVo {
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 
-    public OAnswerVo(Answer answer) {
+    public AnswerO(Answer answer) {
         setAnswerId(String.valueOf(answer.getAnswerId()));
         setQuestionId(String.valueOf(answer.getQuestionId()));
         setUserId(String.valueOf(answer.getUserId()));

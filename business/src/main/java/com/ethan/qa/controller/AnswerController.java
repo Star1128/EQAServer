@@ -1,7 +1,7 @@
 package com.ethan.qa.controller;
 
 import com.ethan.common.response.ResponseResult;
-import com.ethan.qa.pojo.vo.IAnswerVo;
+import com.ethan.qa.pojo.vo.AnswerI;
 import com.ethan.qa.service.IAnswerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,13 +29,13 @@ public class AnswerController {
     private IAnswerService mAnswerService;
 
     @PostMapping("/publish")
-    public ResponseResult publishAnswer(@RequestParam("question_id") long questionId, @RequestBody IAnswerVo IAnswerVo) {
-        return mAnswerService.publishAnswer(questionId, IAnswerVo);
+    public ResponseResult publishAnswer(@RequestParam("question_id") long questionId, @RequestBody AnswerI AnswerI) {
+        return mAnswerService.publishAnswer(questionId, AnswerI);
     }
 
     @PostMapping("/edit")
-    public ResponseResult editAnswer(@RequestParam("answer_id") Long answerId, @RequestBody IAnswerVo IAnswerVo) {
-        return mAnswerService.editAnswer(answerId, IAnswerVo);
+    public ResponseResult editAnswer(@RequestParam("answer_id") Long answerId, @RequestBody AnswerI AnswerI) {
+        return mAnswerService.editAnswer(answerId, AnswerI);
     }
 
     @DeleteMapping("/delete")
