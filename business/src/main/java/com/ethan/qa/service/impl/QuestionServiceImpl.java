@@ -9,9 +9,9 @@ import com.ethan.common.utils.TextUtil;
 import com.ethan.qa.config.GlobalConfig;
 import com.ethan.qa.mapper.QuestionMapper;
 import com.ethan.qa.pojo.po.Question;
-import com.ethan.qa.pojo.vo.QuestionI;
 import com.ethan.qa.pojo.vo.AnswerO;
 import com.ethan.qa.pojo.vo.QAO;
+import com.ethan.qa.pojo.vo.QuestionI;
 import com.ethan.qa.pojo.vo.QuestionO;
 import com.ethan.qa.pojo.vo.QuestionsO;
 import com.ethan.qa.service.IAnswerService;
@@ -134,6 +134,11 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
             // 保存
             if (!save(questionVo.toQuestion(uid, uid))) {
                 return new ResponseResult(ResponseState.DB_FAIL);
+            }
+            // 检查余额
+            long balance = mUserInfoService.getBalance(uid);
+            if (balance < questionVo.getReward()) {
+                return new ResponseResult(ResponseState.INSUFFICIENT_BALANCE);
             }
             // 扣悬赏金
             mUserInfoService.withdraw(uid, questionVo.getReward());
