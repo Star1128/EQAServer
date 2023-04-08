@@ -93,7 +93,7 @@ public class Domain implements Serializable {
 
     @Override
     public String toString() {
-        return "Domain{" +
+        return "DomainO{" +
         "id = " + domainId +
         ", domainName = " + domainName +
         ", viewCount = " + viewCount +

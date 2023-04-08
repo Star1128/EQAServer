@@ -7,8 +7,12 @@ import com.ethan.common.utils.ELog;
 import com.ethan.qa.mapper.DomainMapper;
 import com.ethan.qa.pojo.po.Domain;
 import com.ethan.qa.pojo.vo.DomainO;
+import com.ethan.qa.pojo.vo.DomainsO;
 import com.ethan.qa.service.IDomainService;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -79,7 +83,12 @@ public class DomainServiceImpl extends BaseServiceImpl<DomainMapper, Domain> imp
         long uid = Long.parseLong((String) result.getData()); // 约定大于配置，UID 一定是 Long 型：）
         ELog.INFO("获取领域列表 UID ---> " + uid);
 
-        return ResponseResult.SUCCESS(new DomainO(list()));
+        List<Domain> origin = list();
+        List<DomainO> domains = new ArrayList<>();
+        for (Domain d : origin) {
+            domains.add(new DomainO(d));
+        }
+        return ResponseResult.SUCCESS(new DomainsO(domains));
     }
 
     @Override
