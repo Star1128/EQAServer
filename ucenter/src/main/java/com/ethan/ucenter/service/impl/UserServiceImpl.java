@@ -18,6 +18,7 @@ import com.ethan.ucenter.pojo.vo.LoginVO;
 import com.ethan.ucenter.pojo.vo.PageVO;
 import com.ethan.ucenter.pojo.vo.SignInVO;
 import com.ethan.ucenter.pojo.vo.UserAdminVO;
+import com.ethan.ucenter.pojo.vo.UserAuthVO;
 import com.ethan.ucenter.pojo.vo.UserVO;
 import com.ethan.ucenter.service.ICheckService;
 import com.ethan.ucenter.service.ISignInInfoService;
@@ -170,7 +171,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         ELog.INFO("TokenMD5 ===> " + tokenMD5);
 
         // 但我没时间写那么复杂，所以暂时直接把 Token 扔回去：）
-        return new ResponseResult(ResponseState.LOGIN_SUCCESS, token);
+        return new ResponseResult(ResponseState.LOGIN_SUCCESS, new UserAuthVO(token));
     }
 
     @Override
