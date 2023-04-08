@@ -85,4 +85,14 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
         UserInfoO userInfoO = new UserInfoO(domainAmount, questionAmount, answerAmount, userInfo, balance);
         return ResponseResult.SUCCESS(userInfoO);
     }
+
+    @Override
+    public void initUserInfo(long uid) {
+        if (getById(uid) == null) {
+            UserInfo info = new UserInfo();
+            info.setUserId(uid);
+            info.setBalance(0);
+            save(info);
+        }
+    }
 }

@@ -33,4 +33,6 @@ public interface IUserInfoService extends IService<UserInfo> {
      * 用户全部信息概览
      */
     ResponseResult overviewInfo();
+
+    void initUserInfo(long uid);
 }

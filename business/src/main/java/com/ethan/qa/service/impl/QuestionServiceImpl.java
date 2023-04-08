@@ -56,6 +56,9 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
         long uid = Long.parseLong((String) result.getData()); // 约定大于配置，一定是 Long 型：）
         ELog.INFO("获取推荐列表 UID ---> " + uid);
 
+        // 由于注册登录客户端都是直接走的 UC，QA 后端只能在进入首页时判断用户是否是新用户
+        mUserInfoService.initUserInfo(uid);
+
         if (enableAlgorithm) {
             // TODO: 2023/2/27 推荐算法，目前是按创建顺序分页查出来
         }
