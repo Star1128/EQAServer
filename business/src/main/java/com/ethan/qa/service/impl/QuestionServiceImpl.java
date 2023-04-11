@@ -173,6 +173,25 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
     }
 
     @Override
+    public long getDomainId(long questionId) {
+        Question question = getById(questionId);
+        return question.getDomainId();
+    }
+
+    @Override
+    public int getReward(long questionId) {
+        Question question = getById(questionId);
+        return question.getReward();
+    }
+
+    @Override
+    public void updateReward(long questionId, int reward) {
+        Question question = getById(questionId);
+        question.setReward(reward);
+        updateById(question);
+    }
+
+    @Override
     public long userQuestionAmount(long uid) {
         QueryWrapper<Question> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", uid);

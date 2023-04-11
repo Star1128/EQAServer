@@ -1,6 +1,7 @@
 package com.ethan.qa.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.ethan.common.response.ResponseResult;
 import com.ethan.common.utils.ELog;
 import com.ethan.qa.mapper.UserDomainMapper;
@@ -84,5 +85,24 @@ public class UserDomainServiceImpl extends BaseServiceImpl<UserDomainMapper, Use
         userDomain.setDomainId(domainId);
         save(userDomain);
         return ResponseResult.SUCCESS();
+    }
+
+    @Override
+    public void updateExp(long uid, long did, int exp) {
+        UpdateWrapper<UserDomain> wrapper = new UpdateWrapper<>();
+        wrapper.eq("user_id", uid);
+        wrapper.eq("domain_id", did);
+        UserDomain userDomain = getOne(wrapper);
+        userDomain.setExp(userDomain.getExp() + exp);
+        updateById(userDomain);
+    }
+
+    @Override
+    public int getExp(Long uid, long did) {
+        UpdateWrapper<UserDomain> wrapper = new UpdateWrapper<>();
+        wrapper.eq("user_id", uid);
+        wrapper.eq("domain_id", did);
+        UserDomain userDomain = getOne(wrapper);
+        return userDomain.getExp();
     }
 }

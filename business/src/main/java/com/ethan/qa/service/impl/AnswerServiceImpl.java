@@ -4,12 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.ethan.common.response.ResponseResult;
 import com.ethan.common.response.ResponseState;
 import com.ethan.common.utils.ELog;
+import com.ethan.qa.config.GlobalConfig;
 import com.ethan.qa.mapper.AnswerMapper;
 import com.ethan.qa.pojo.po.Answer;
 import com.ethan.qa.pojo.vo.AnswerI;
 import com.ethan.qa.pojo.vo.AnswerO;
 import com.ethan.qa.pojo.vo.AnswersO;
 import com.ethan.qa.service.IAnswerService;
+import com.ethan.qa.service.IQuestionService;
+import com.ethan.qa.service.IUserDomainService;
 import com.ethan.qa.service.IUserInfoService;
 import com.ethan.qa.service.IUserStarService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -35,6 +39,11 @@ public class AnswerServiceImpl extends BaseServiceImpl<AnswerMapper, Answer> imp
     @Autowired
     @Lazy
     private IUserInfoService mUserInfoService;
+    @Autowired
+    private IUserDomainService mUserDomainService;
+    @Autowired
+    @Lazy
+    private IQuestionService mQuestionService;
 
     @Override
     public int getAnswersCount(long questionId) {
@@ -52,13 +61,22 @@ public class AnswerServiceImpl extends BaseServiceImpl<AnswerMapper, Answer> imp
         List<Answer> originList = list(wrapper);
         ELog.INFO(originList.toString());
 
+
         // 组装额外信息
         List<AnswerO> answerList = new ArrayList<>();
         for (Answer a : originList) {
             answerList.add(getExtraInfo(a));
         }
 
-        // TODO 算法排序
+        // 根据作者在该领域经验排序
+        answerList.sort(new Comparator<AnswerO>() {
+            @Override
+            public int compare(AnswerO o1, AnswerO o2) {
+                int exp1 = mUserDomainService.getExp(Long.valueOf(o1.getUserId()), mQuestionService.getDomainId(questionId));
+                int exp2 = mUserDomainService.getExp(Long.valueOf(o2.getUserId()), mQuestionService.getDomainId(questionId));
+                return exp1 - exp2;
+            }
+        });
 
         return answerList;
     }
@@ -76,6 +94,19 @@ public class AnswerServiceImpl extends BaseServiceImpl<AnswerMapper, Answer> imp
         Answer answer = answerVo.toAnswer(questionId, uid, uid);
         if (!save(answer)) {
             return new ResponseResult(ResponseState.DB_FAIL);
+        }
+
+        // 加钱
+        mUserInfoService.deposit(uid, GlobalConfig.REWARD_PUBLISH_ANSWER);
+        // 领域加经验
+        long did = mQuestionService.getDomainId(questionId);
+        mUserDomainService.updateExp(uid, did, GlobalConfig.EXP_PUBLISH_ANSWER);
+        // 拿十分之一悬赏
+        int reward = mQuestionService.getReward(questionId);
+        if (reward > 0) {
+            int currentReward = reward / 10;
+            mUserInfoService.deposit(uid, currentReward);
+            mQuestionService.updateReward(questionId, reward - currentReward);
         }
 
         return ResponseResult.SUCCESS();

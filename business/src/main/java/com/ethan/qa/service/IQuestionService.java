@@ -45,4 +45,10 @@ public interface IQuestionService extends IService<Question> {
     ResponseResult userQuestion();
 
     ResponseResult deleteQuestion(Long questionId);
+
+    long getDomainId(long questionId);
+
+    int getReward(long questionId);
+
+    void updateReward(long questionId, int reward);
 }

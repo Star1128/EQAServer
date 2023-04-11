@@ -43,4 +43,9 @@ public class GlobalConfig {
     // 存到 Cookie 中的 Token 前缀
     public static final String TOKEN = "token";
 
+    /* 业务 */
+    // 发回答赏钱
+    public static final int REWARD_PUBLISH_ANSWER = 10;
+    // 发回答加经验
+    public static final int EXP_PUBLISH_ANSWER = 1;
 }
