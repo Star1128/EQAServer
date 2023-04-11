@@ -8,6 +8,7 @@ import com.ethan.qa.mapper.AnswerMapper;
 import com.ethan.qa.pojo.po.Answer;
 import com.ethan.qa.pojo.vo.AnswerI;
 import com.ethan.qa.pojo.vo.AnswerO;
+import com.ethan.qa.pojo.vo.AnswersO;
 import com.ethan.qa.service.IAnswerService;
 import com.ethan.qa.service.IUserInfoService;
 import com.ethan.qa.service.IUserStarService;
@@ -195,7 +196,7 @@ public class AnswerServiceImpl extends BaseServiceImpl<AnswerMapper, Answer> imp
             answerList.add(getExtraInfo(a));
         }
 
-        return ResponseResult.SUCCESS(answerList);
+        return ResponseResult.SUCCESS(new AnswersO(answerList));
     }
 
     @Override

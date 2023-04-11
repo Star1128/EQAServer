@@ -5,10 +5,15 @@ import com.ethan.common.response.ResponseResult;
 import com.ethan.common.utils.ELog;
 import com.ethan.qa.mapper.UserDomainMapper;
 import com.ethan.qa.pojo.po.UserDomain;
+import com.ethan.qa.pojo.vo.UserDomainO;
+import com.ethan.qa.pojo.vo.UserDomainsO;
 import com.ethan.qa.service.IDomainService;
 import com.ethan.qa.service.IUserDomainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -35,7 +40,13 @@ public class UserDomainServiceImpl extends BaseServiceImpl<UserDomainMapper, Use
 
         QueryWrapper<UserDomain> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", uid);
-        return ResponseResult.SUCCESS(list(wrapper));
+        List<UserDomainO> domains = new ArrayList<>();
+        for (UserDomain userDomain : list(wrapper)) {
+            String domainName = mDomainService.getDomainName(userDomain.getDomainId());
+            domains.add(new UserDomainO(userDomain, domainName));
+        }
+
+        return ResponseResult.SUCCESS(new UserDomainsO(domains));
     }
 
     @Override

@@ -195,7 +195,7 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
             questionList.add(getExtraInfo(q));
         }
 
-        return ResponseResult.SUCCESS(questionList);
+        return ResponseResult.SUCCESS(new QuestionsO(questionList));
     }
 
     /**

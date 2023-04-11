@@ -123,6 +123,7 @@ public class UserStarServiceImpl extends BaseServiceImpl<UserStarMapper, UserSta
         wrapper.eq("user_id", uid);
         List<UserStar> list = list(wrapper);
 
+        // TODO: 2023/4/11 返回详细内容
         return ResponseResult.SUCCESS(list);
     }
 }

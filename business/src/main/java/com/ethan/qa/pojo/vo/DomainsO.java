@@ -1,7 +1,5 @@
 package com.ethan.qa.pojo.vo;
 
-import com.ethan.qa.pojo.po.Domain;
-
 import java.util.List;
 
 /**
