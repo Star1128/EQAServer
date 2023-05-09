@@ -29,6 +29,8 @@ public interface IUserDomainService extends IService<UserDomain> {
      */
     ResponseResult joinDomain(Long domainId);
 
+    void joinDomain(Long uid, Long domainId);
+
     /**
      * 加经验
      */

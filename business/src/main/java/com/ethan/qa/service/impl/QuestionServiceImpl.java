@@ -53,7 +53,7 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
         if (!(result = T2U()).isSuccess()) {
             return result;
         }
-        long uid = Long.parseLong((String) result.getData()); // 约定大于配置，一定是 Long 型：）
+        long uid = Long.parseLong((String) result.getData()); // 约定大于配置，一定是 Long 型
         ELog.INFO("获取推荐列表 UID ---> " + uid);
 
         // 由于注册登录客户端都是直接走的 UC，QA 后端只能在进入首页时判断用户是否是新用户
@@ -134,10 +134,6 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
             }
         } else {
             // 如果没有 QID，说明是新建问题
-            // 保存
-            if (!save(questionVo.toQuestion(uid, uid))) {
-                return new ResponseResult(ResponseState.DB_FAIL);
-            }
             // 检查余额
             long balance = mUserInfoService.getBalance(uid);
             if (balance < questionVo.getReward()) {
@@ -145,6 +141,10 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
             }
             // 扣悬赏金
             mUserInfoService.withdraw(uid, questionVo.getReward());
+            // 保存
+            if (!save(questionVo.toQuestion(uid, uid))) {
+                return new ResponseResult(ResponseState.DB_FAIL);
+            }
         }
 
         return ResponseResult.SUCCESS();
@@ -159,7 +159,7 @@ public class QuestionServiceImpl extends BaseServiceImpl<QuestionMapper, Questio
         long uid = Long.parseLong((String) result.getData()); // 约定大于配置，UID 一定是 Long 型：）
         ELog.INFO("删除问题 UID ---> " + uid);
 
-        // 判断 AID 的所有者是不是 UID 或者是不是管理员
+        // 判断 QID 的所有者是不是 UID 或者是不是管理员
         Question question = getById(questionId);
         if (question.getUserId() != uid && !isAdmin().isSuccess()) {
             return new ResponseResult(ResponseState.PERMISSION_DENIED);

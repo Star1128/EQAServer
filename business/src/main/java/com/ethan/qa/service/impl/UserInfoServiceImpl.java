@@ -3,9 +3,11 @@ package com.ethan.qa.service.impl;
 import com.ethan.common.response.ResponseResult;
 import com.ethan.common.utils.ELog;
 import com.ethan.qa.mapper.UserInfoMapper;
+import com.ethan.qa.pojo.po.Domain;
 import com.ethan.qa.pojo.po.UserInfo;
 import com.ethan.qa.pojo.vo.UserInfoO;
 import com.ethan.qa.service.IAnswerService;
+import com.ethan.qa.service.IDomainService;
 import com.ethan.qa.service.IQuestionService;
 import com.ethan.qa.service.IUserDomainService;
 import com.ethan.qa.service.IUserInfoService;
@@ -29,6 +31,8 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
     private IQuestionService mQuestionService;
     @Autowired
     private IAnswerService mAnswerService;
+    @Autowired
+    private IDomainService mDomainService;
 
     @Override
     public int getBalance(long uid) {
@@ -89,10 +93,16 @@ public class UserInfoServiceImpl extends BaseServiceImpl<UserInfoMapper, UserInf
     @Override
     public void initUserInfo(long uid) {
         if (getById(uid) == null) {
+            // 初始化用户信息
             UserInfo info = new UserInfo();
             info.setUserId(uid);
             info.setBalance(0);
             save(info);
+
+            // 初始化用户在各个领域的经验
+            for (Domain domain : mDomainService.list()) {
+                mUserDomainService.joinDomain(uid, domain.getDomainId());
+            }
         }
     }
 }

@@ -217,7 +217,7 @@ public class AnswerServiceImpl extends BaseServiceImpl<AnswerMapper, Answer> imp
         if (!(result = T2U()).isSuccess()) {
             return result;
         }
-        long uid = Long.parseLong((String) result.getData()); // 约定大于配置，UID 一定是 Long 型：）
+        long uid = Long.parseLong((String) result.getData());
         ELog.INFO("获取回答 UID ---> " + uid);
 
         QueryWrapper<Answer> wrapper = new QueryWrapper<>();

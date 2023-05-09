@@ -74,7 +74,7 @@ public class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, 
     }
 
     /**
-     * 远程获取用户信息
+     * 远程判断用户是否为应用管理员
      *
      * @return 发送失败、无响应、账号未登录：返回指定错误码；<br>获取成功：返回信息
      */
